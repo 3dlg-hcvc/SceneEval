@@ -1,0 +1,29 @@
+# SceneEval
+
+### SceneEval: Evaluating Semantic Coherence in Text-Conditioned 3D Indoor Scene Synthesis
+
+[Hou In Ivan Tam](https://iv-t.github.io/), [Hou In Derek Pun](https://houip.github.io/), [Austin T. Wang](https://atwang16.github.io/), [Angel X. Chang](https://angelxuanchang.github.io/), [Manolis Savva](https://msavva.github.io/)
+
+<!-- <img src="docs/static/images/teaser.webp" alt="teaser" style="width:100%"/> -->
+
+[Page](https://3dlg-hcvc.github.io/SceneEval/) | [Paper]() | [Data]()
+
+## More to come soon...
+
+
+## Citation
+Please cite our work if you find it helpful:
+```
+@article{tam2025sceneeval,
+    title = {{SceneEval}: Evaluating Semantic Coherence in Text-Conditioned {3D} Indoor Scene Synthesis},
+    author = {Tam, Hou In Ivan and Pun, Hou In Derek and Wang, Austin T. and Chang, Angel X. and Savva, Manolis},
+    year = {2025},
+    eprint = {xxxx.xxxxx},
+    archivePrefix = {arXiv}
+}
+```
+
+## Acknowledgements
+This work was funded in part by the Sony Research Award Program, a CIFAR AI Chair, a Canada Research Chair, NSERC Discovery Grants, and enabled by support from the \href{https://alliancecan.ca/}{Digital Research Alliance of Canada}.
+We thank Nao Yamato, Yotaro Shimose, and other members on the Sony team for their feedback.
+We also thank Qirui Wu, Xiaohao Sun, and Han-Hung Lee for helpful discussions.
