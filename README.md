@@ -8,8 +8,8 @@
 
 [Page](https://3dlg-hcvc.github.io/SceneEval/) | [Paper]() | [Data]()
 
-## More to come soon...
-
+## This repo is under development. More to come soon...
+In the meantime, explore more of our work [here](https://3dlg-hcvc.github.io/projects/).
 
 ## Citation
 Please cite our work if you find it helpful:
@@ -24,6 +24,6 @@ Please cite our work if you find it helpful:
 ```
 
 ## Acknowledgements
-This work was funded in part by the Sony Research Award Program, a CIFAR AI Chair, a Canada Research Chair, NSERC Discovery Grants, and enabled by support from the \href{https://alliancecan.ca/}{Digital Research Alliance of Canada}.
+This work was funded in part by the Sony Research Award Program, a CIFAR AI Chair, a Canada Research Chair, NSERC Discovery Grants, and enabled by support from the [Digital Research Alliance of Canada](https://alliancecan.ca/).
 We thank Nao Yamato, Yotaro Shimose, and other members on the Sony team for their feedback.
 We also thank Qirui Wu, Xiaohao Sun, and Han-Hung Lee for helpful discussions.
