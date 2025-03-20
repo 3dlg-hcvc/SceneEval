@@ -6,7 +6,7 @@
 
 <!-- <img src="docs/static/images/teaser.webp" alt="teaser" style="width:100%"/> -->
 
-[Page](https://3dlg-hcvc.github.io/SceneEval/) | [Paper]() | [Data]()
+[Page](https://3dlg-hcvc.github.io/SceneEval/) | [Paper](https://arxiv.org/abs/2503.14756) | [Data]()
 
 ## This repo is under development. More to come soon...
 In the meantime, explore more of our work [here](https://3dlg-hcvc.github.io/projects/).
@@ -18,7 +18,7 @@ Please cite our work if you find it helpful:
     title = {{SceneEval}: Evaluating Semantic Coherence in Text-Conditioned {3D} Indoor Scene Synthesis},
     author = {Tam, Hou In Ivan and Pun, Hou In Derek and Wang, Austin T. and Chang, Angel X. and Savva, Manolis},
     year = {2025},
-    eprint = {xxxx.xxxxx},
+    eprint = {2503.14756},
     archivePrefix = {arXiv}
 }
 ```
