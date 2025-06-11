@@ -1,0 +1,47 @@
+defaults:
+  - _self_
+  - assets
+  - models
+  - metrics
+  - vlms
+  - evaluation_plan: eval_plan
+
+seed: 42
+
+scene:
+  skip_missing_obj: False
+  simple_arch_wall_height: 3
+  # Note: whether to use simple architecture is set in evaluation plans
+
+blender:
+  suppress_warning: False
+  render_engine: BLENDER_EEVEE_NEXT
+  taa_render_samples: 64
+  use_raytracing: True
+  raytracing_method: "PROBE"
+  trace_max_roughness: 0.025
+  resolution_x: 512
+  resolution_y: 512
+  environment_map: datafiles/studiolights/world/interior.exr # Relative to the Blender installation directory - "BLENDER_42_DIR" in .env
+  environment_map_strength: 0.75
+  use_transparent_film: True
+  render_file_format: PNG
+  hide_holes_in_render: True
+
+  object_render_subdir: obj_render
+  default_render_filename: render.png
+  default_blend_filename: scene.blend
+  default_glb_filename: scene.glb
+  
+  # Default camera settings
+  camera_location: [0.0, 0.0, 0.0]
+  camera_rotation_euler: [0.0, 0.0, 0.0]
+  camera_type: PERSP
+  camera_lens_unit: MILLIMETERS
+  camera_lens: 35
+  camera_bird_view_degree: 60
+
+  human_model: ./input/human.glb
+
+trimesh:
+  arch_thickness: 0.001

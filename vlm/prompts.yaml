@@ -1,0 +1,300 @@
+system: >
+  You are an expert in interior design.
+  You have seen thousands of interior designs and have a good understanding of the spatial arrangement of objects in a room.
+  Now, you are working as an evaluator for a design company.
+  Use your expertise in interior design to evaluate the spatial arrangement of objects in the given scene according to the task instructions.
+  When you are required to include object descriptions in your response, respond exactly as they are provided in the task instructions word for word.
+  When you are required to give a specific side for a response to a relationship, use only the sides provided in the task instructions.
+obj_matching: >
+  The user specified the scene to contain objects of certain categories.
+  To facilitate further evaluation, you need to match the objects in the scene to the object categories specified by the user.
+  You are provided an image of one of the objects in the scene.
+  Does the object in the image belong to any of the object categories specified by the user?
+  Respond in the given response schema. Here are two example responses:
+  ```
+  provided_categories: ["chair", "table", "lamp"]
+  matched: True
+  matched_category: "chair"
+  actual_category: "chair"
+  reason: "The object in the image is a chair."
+  ```
+  ```
+  provided_categories: ["chair", "table", "lamp"]
+  matched: False
+  matched_category: ""
+  actual_category: "sofa"
+  reason: "The object in the image is a sofa, which does not match any of the specified categories."
+  ```
+  If the object in the image does not belong to any of the object categories specified by the user, respond with "matched: False" and "matched_category: "".
+  Here is the list of object categories that the user specified to match against:
+  "<TARGET_CATEGORIES>"
+obj_attribute: >
+  The user specified the scene to contain objects with certain attributes.
+  You are provided with images of instances of objects in the scene with the same category.
+  There are two images for each object instance: one from the front view and one with a 170cm human model for scale.
+  The images are in the following order: obj1_front, obj1_scale, obj2_front, obj2_scale, ...
+  Given these images, how many of these objects satisfy the attribute requirements specified by the user?
+  Note that the human model is included in the images solely for scale reference and should not be considered as part of the evaluation.
+  Respond in the given response schema. Here is an example response:
+  ```
+  category: "chair",
+  num_instances: 3,
+  [
+    {
+      "instance": 0,
+      "attribute": "red",
+      "satisfied": True,
+      "reason": "This chair is red."
+    },
+    {
+      "instance": 1,
+      "attribute": "red",
+      "satisfied": False,
+      "reason": "This chair is blue."
+    },
+    ...
+  ]
+  ```
+  The attribute requirements are as follows:
+  "<OBJ_ATTRIBUTES>"
+  Here are the renderings of "<OBJ_COUNT>" instances of object with category "<OBJ_CATEGORY>" in the scene.
+obj_support_type: >
+  Objects in the scene are placed on the ground, on wall, on ceiling, or on other objects.
+  You are given two images of an object in the scene: one from the front view and one slightly zoomed out to show the surrounding area.
+  Using the images, identify the support type of the object.
+  The support type of an object is the surface on which the object is placed.
+  Here are the support types for objects:
+  - ground: The object is placed on the ground. (e.g., "table on the ground")
+  - wall: The object is placed on the wall. (e.g., "painting on the wall")
+  - ceiling: The object is placed on the ceiling. (e.g., "lamp hanging from the ceiling")
+  - object: The object is placed on a surface of another object. (e.g., "book on the table")
+  Respond in the given response schema. Here is two example responses:
+  ```
+  support_type: "ground",
+  reason: "The table is placed on the ground."
+  ```
+  ```
+  support_type: "wall",
+  reason: "The painting is placed on the wall."
+  ```
+  If the object appears to be a ceiling light, carefully consider the image as it may be difficult to see that the object is hanging from the ceiling.
+obj_functional_sides: >
+  Objects in the scene have functional sides that are important for their placement and use.
+  The functional sides of an object are the sides that need to be accessible for the object to be used properly.
+  Here, only consider these four sides of an object: ["front", "back", "left", "right"].
+  If an object is placed in a scene, at least one of its functional sides should be accessible for the object to be considered properly placed.
+  If an object has multiple functional sides, this means that the object can be used from any of these sides and there is no difference in importance between them.
+  Otherwise, only consider the most important functional side as the sole functional side of the object.
+  Here are some examples of different cases:
+  - Objects that have equal importance for their functional sides:
+    - bed: ["front", "left", "right"]
+    - dining_table: ["front", "back", "left", "right"]
+  - Objects that have a significant front side:
+    - desk: ["front"]
+    - sofa: ["front"]
+  - Objects that can be moved so all sides are functional:
+    - dining_chair: ["front", "back", "left", "right"]
+    - stool: ["front", "back", "left", "right"]
+  You are provided with descriptions of the objects in the scene.
+  The task is to identify the functional sides of each of the objects.
+  Note that for small objects like cups and books that are placed on a surface, do not consider their functional sides and respond with an empty list.
+  Respond in the given response schema. Here is an example response:
+  ```
+  [
+    {
+      "obj_description": "bed.n.01 - bed description",
+      "functonal_sides": ["front", "left", "right"],
+      "reason": "These three sides of a bed have equal importance for accessibility and as long as one of them is accessible, the bed is considered properly placed."
+    },
+    {
+      "obj_description": "chair.n.01 - chair description",
+      "functonal_sides": ["front", "back", "left", "right"],
+      "reason": "All four sides of a chair are functional because it can be moved and used from any side."
+    },
+    {
+      "obj_description": "cup.n.01 - cup description",
+      "functonal_sides": [],
+      "reason": "Cups are small objects that do not have functional sides."
+    }
+    ...
+  ]
+  ```
+  The descriptions of the objects in the scene are as follows:
+  "<OBJ_DESCRIPTIONS>"
+obj_relationship_mapping: >
+  The user specified the scene to contain certain relationships between objects.
+  An object-object relationship is a spatial relationship between two or more objects in the scene.
+  In which, an anchor object is the object that is used as a reference point to compare against.
+  Here are some examples to illustrate the concept of anchor object:
+  - "chair next to the table": the table is the anchor object.
+  - "lamp near the sofa": the sofa is the anchor object.
+  You are provided with manually annotated relationships between objects in the scene.
+  The task is to map the mentioned relationships into one or more of the predefined spatial relationship type here:
+  - inside_of: The target object is inside the anchor object. (e.g., "cup inside the cabinet")
+  - outside_of: The target object is outside the anchor object. (e.g., "toy outside the box")
+  - face_to: The target object is facing the anchor object. (e.g., "sofa facing the TV")
+  - side_of: The target object is at one of the six sides (left, right, front, back, top, bottom) of the anchor object. (e.g., "nightstand left of the bed")
+  - side_region: The target object is inside the anchor object at one of the six sides (left, right, front, back, top, bottom). (e.g., "book on the left side of the shelf", "phone on the left side of the table")
+  - long_short_side_of: The target object is specifically at a long or short side of the anchor object. (e.g., "book at the long side of the table")
+  - on_top: The target object is on top of the anchor object at its top-most surface and not inside it. (e.g., "book on top of the table", but not applicable for "book on a "bookshelf" because the book is technically inside the bookshelf - use inside_of instead)
+  - middle_of: The target object is in the middle of the anchor object. (This only compares the objects in 2D, e.g., "pillow in the middle of the bed")
+  - surround: Multiple target objects (can be different types) are circled around one anchor object. (e.g., "four chairs surrounding the table")
+  - next_to: The target object is next to the anchor object within 0 to 0.5m (e.g., "chair next to the table")
+  - near: The target object is near the anchor object within 0.5 to 1.5m. (e.g., "sofa near the TV")
+  - across_from: The target object is far from the anchor object within 1.5 to 4m. (e.g., "lamp across the room from the sofa")
+  - far: The target object is far from the anchor object beyond 4m. (e.g., "painting far from the bed")
+  - None: None of the predefined spatial relationships above match the relationship
+  You can choose multiple relationship types for a single input relationship if it requires multiple types to fully describe the relationship.
+  Here is an example of relationships that require multiple types to fully describe them:
+  - "table at the foot of the bed" needs both "side_of" and "next_to" relationship types to fully describe it.
+  Here are some additional guidelines for mapping the relationships:
+  - When choosing side_of and side_region, you must also specify the side of the anchor object (left, right, front, back, top, bottom).
+  - When choosing long_short_side_of, you must also specify the side of the anchor object (long, short).
+  - For side ambiguous relationships, like "next to" or "adjacent to", simply choose the distance-based relationship (next_to, near, across_from, far).
+  - When you choose multiple types for a single relationship, and some of the types require specifying a side, you must specify the side for all types in the same order as the types are listed.
+    - Use "None" for the side when a type does not require specifying a side.
+    - For example, if you choose both "side_of" and "next_to" for a relationship, you must specify the sides as ["front", None].
+  - Even if the relationship type does not require specifying a side, you must still provide a side as "None" in the response at the corresponding index.
+  - When the anchor object is not specified (i.e., when the anchor index is -1), put the first object in the relationship as the anchor object in your response.
+  - The other_object_counts are the number of objects that are part of the relationship for each object category in other_objects in the same order.
+  - When none of the predefined spatial relationships match the relationship, put "None" as the relationship type and provide a reason. (Do not put an empty list.)
+  Respond in the given response schema. Here is an example response:s
+  ```
+  [
+    {
+      "relationship": "beneath - objects: box, bed, with the object with index: 0 being the anchor",
+      "anchor_object": "bed",
+      "other_objects": ["box"],
+      "other_object_counts": [1],
+      "relationship_types": ["side_region"],
+      "sides": ["bottom"],
+      "reason": "Box beneath the bed is considered as the box being inside the bed at the bottom side."
+    },
+    {
+      "relationship": "next_to - objects: lamp, chair, with the object with index: 0 being the anchor",
+      "anchor_object": "lamp",
+      "other_objects": ["chair"],
+      "other_object_counts": [1],
+      "relationship_types": ["next_to"],
+      "sides": [None],
+      "reason": "Chair next to the lamp is considered as the chair being next to the lamp."
+    },
+    {
+      "relationship": "at the foot of - objects: bed, table, with the object with index: 0 being the anchor",
+      "anchor_object": "bed",
+      "other_objects": ["table"],
+      "other_object_counts": [1],
+      "relationship_types": ["side_of", "next_to"],
+      "sides": ["front", None],
+      "reason": "Table at the foot of the bed is considered as the table being at the front side of the bed and next to it."
+    },
+    {
+      "relationship": "surround - objects: table, chair:0, chair:1, chair:2, sofa, with the object with index: 0 being the anchor",
+      "anchor_object": "table",
+      "other_objects": ["chair", "sofa"],
+      "other_object_counts": [3, 1],
+      "relationship_type": ["surround"],
+      "side": [None],
+      "reason": "Three chairs and a sofa surrounding the table is considered as the chairs and the sofa surrounding the table."
+    },
+    {
+      "relationship": "diagnoally across - objects: table, chair, with the object with index: 0 being the anchor",
+      "anchor_object": "table",
+      "other_objects": ["chair"],
+      "other_object_counts": [1],
+      "relationship_types": None
+      "sides": [None],
+      "reason": "No appropriate relationship type found for this relationship - chair diagonally across the table."
+    }
+    ...
+  ]
+  ```
+  The annotated relationships between objects in the scene are as follows:
+  "<RELATIONSHIPS>"
+arch_relationship_mapping: >
+  The user specified the scene to contain certain relationships between objects and architectural elements.
+  An architectural element is a structural component of a building, such as a wall, floor, ceiling, or room.
+  Here are some examples of relationships between objects and architectural elements:
+  - "painting on the wall"
+  - "bookshelf against the wall"
+  You are provided with manually annotated relationships between objects and architectural elements in the scene.
+  The task is to map the mentioned relationships into one of the predefined spatial relationship type:
+  - inside_room: The target object is inside the room. (e.g., "sofa inside the room")
+  - middle_of_room: The target object is in the middle of the room. (e.g., "table in the middle of the room")
+  - next_to: The target object is next to an architectural element within 0 to 0.5m. (e.g., "chair next to the wall")
+  - near: The target object is near an architectural element within 0.5 to 1.5m. (e.g., "lamp near the door")
+  - across_from: The target object is far from an architectural element within 1.5 to 4m. (e.g., "art across from the wall")
+  - far: The target object is far from an architectural element beyond 4m. (e.g., "table far from the window")
+  - on_wall: The target object is on the wall (must be directly in front of the wall). (e.g., "painting on the wall")
+  - against_wall: The target object is against the wall (must be directly in front of the wall). (e.g., "bookshelf against the wall")
+  - corner_of_room: The target object is at the corner of the room. (e.g., "chair at the corner of the room")
+  - hang_from_ceiling: The target object is hanging from the ceiling. (e.g., "lamp hanging from the ceiling")
+  - None: None of the predefined spatial relationships above match the relationship
+  Here are some additional guidelines for mapping the relationships:
+  - When specifying the architectural element type, select from the following: ["wall", "floor", "ceiling", "room", "window", "door"].
+  - When choosing floor or room, you must also specify the specific floors from the provided list of floor IDs.
+    - If the IDs are not informative enough and you cannot determine the specific floor, choose all floors in the scene.
+    - If the relationship is not specific to a floor, choose all floors in the scene.
+  - When none of the predefined spatial relationships match the relationship, put "None" as the relationship type and provide a reason.
+  Respond in the given response schema. Here is an example response:
+  ```
+  [
+    {
+      "relationship": "on - object: painting, with respect to architectural element: wall"
+      "target_object": "painting",
+      "architectural_element_type": "wall",
+      "relationship_type": "on_wall",
+      "specific_floors": [],
+      "reason": "The painting is on the wall."
+    },
+    {
+      "relationship": "along - object: bookshelf, with respect to architectural element: wall"
+      "target_object": "bookshelf",
+      "architectural_element_type": "wall",
+      "relationship_type": "against_wall",
+      "specific_floors": [],
+      "reason": "The bookshelf is along a wall means that it is in front of and against the wall."
+    },
+    {
+      "relationship": "corner - object: chair, with respect to architectural element: bedroom"
+      "target_object": "chair",
+      "arch_element_type": "room",
+      "relationship_type": "corner_of_room",
+      "specific_floors": ["floor_bedroom_001", ...]
+      "reason": "The chair is at the corner of the room."
+    }
+    ...
+  ]
+  ```
+  The annotated relationships between objects and architectural elements in the scene are as follows:
+  "<RELATIONSHIPS>"
+  Here are all the floors in the scene that you can choose from:
+  "<FLOOR_IDS>"
+# =================================================================================================== For semantic color
+category_matching_for_semantic_color: >
+  You are given a reference list of object categories and another input list of object categories.
+  The task is to match the object categories in the input list to the reference list.
+  For each object category in the input list, determine if it matches any of the object categories in the reference list.
+  Match each object category in the input list to exactly one object category in the reference list.
+  Respond in the given response schema. Here is an example response:
+  ```
+  [
+    {
+      "input_category": "chair",
+      "matched": True,
+      "matched_reference_category": "chair",
+      "reason": "The input category 'chair' matches the reference category 'chair'."
+    },
+    {
+      "input_category": "table",
+      "matched": False,
+      "matched_reference_category": "",
+      "reason": "The input category 'table' does not match any of the reference categories."
+    },
+    ...
+  ]
+  ```
+  Here is the reference list of object categories:
+  "<REFERENCE_CATEGORIES>"
+  Here is the input list of object categories:
+  "<INPUT_CATEGORIES>"

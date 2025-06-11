@@ -1,0 +1,30 @@
+models:
+  ATISS:
+    input_dir_name: ATISS
+    output_dir_name: ${input_name}
+    asset_datasets:
+      - threed_future
+  
+  DiffuScene:
+    input_dir_name: DiffuScene
+    output_dir_name: ${input_name}
+    asset_datasets:
+      - threed_future
+  
+  InstructScene:
+    input_dir_name: InstructScene
+    output_dir_name: ${input_name}
+    asset_datasets:
+      - threed_future
+  
+  LayoutGPT:
+    input_dir_name: LayoutGPT
+    output_dir_name: ${input_name}
+    asset_datasets:
+      - threed_future
+  
+  Holodeck:
+    input_dir_name: Holodeck
+    output_dir_name: ${input_name}
+    asset_datasets:
+      - objathor

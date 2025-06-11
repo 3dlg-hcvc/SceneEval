@@ -1,0 +1,220 @@
+{
+  "format": "sceneState",
+  "scene": {
+    "arch": {
+      "coords2d": [
+        0,
+        1
+      ],
+      "defaults": {
+        "Ceiling": {
+          "depth": 0.05
+        },
+        "Floor": {
+          "depth": 0.05
+        },
+        "Ground": {
+          "depth": 0.08
+        },
+        "Wall": {
+          "depth": 0.1,
+          "extraHeight": 0.035
+        },
+        "textureSource": "smtTexture"
+      },
+      "elements": [
+        {
+          "depth": 0.05,
+          "id": 0,
+          "materials": [
+            {
+              "diffuse": "#888899",
+              "name": "surface",
+              "texture": "wood_cream_plane_1375"
+            }
+          ],
+          "points": [
+            [
+              3.0,
+              3.0,
+              0
+            ],
+            [
+              -3.0,
+              3.0,
+              0
+            ],
+            [
+              -3.0,
+              -3.0,
+              0
+            ],
+            [
+              3.0,
+              -3.0,
+              0
+            ]
+          ],
+          "roomId": "0",
+          "type": "Floor"
+        },
+        {
+          "depth": 0.025,
+          "height": 2.5,
+          "holes": [],
+          "id": 1,
+          "materials": [
+            {
+              "diffuse": "#888899",
+              "name": "surface",
+              "texture": "wood_cream_plane_1375"
+            }
+          ],
+          "points": [
+            [
+              3.0,
+              3.0,
+              0
+            ],
+            [
+              -3.0,
+              3.0,
+              0
+            ]
+          ],
+          "roomId": "0",
+          "type": "Wall"
+        },
+        {
+          "depth": 0.025,
+          "height": 2.5,
+          "holes": [],
+          "id": 2,
+          "materials": [
+            {
+              "diffuse": "#888899",
+              "name": "surface",
+              "texture": "wood_cream_plane_1375"
+            }
+          ],
+          "points": [
+            [
+              -3.0,
+              3.0,
+              0
+            ],
+            [
+              -3.0,
+              -3.0,
+              0
+            ]
+          ],
+          "roomId": "0",
+          "type": "Wall"
+        },
+        {
+          "depth": 0.025,
+          "height": 2.5,
+          "holes": [],
+          "id": 3,
+          "materials": [
+            {
+              "diffuse": "#888899",
+              "name": "surface",
+              "texture": "wood_cream_plane_1375"
+            }
+          ],
+          "points": [
+            [
+              -3.0,
+              -3.0,
+              0
+            ],
+            [
+              3.0,
+              -3.0,
+              0
+            ]
+          ],
+          "roomId": "0",
+          "type": "Wall"
+        },
+        {
+          "depth": 0.025,
+          "height": 2.5,
+          "holes": [],
+          "id": 4,
+          "materials": [
+            {
+              "diffuse": "#888899",
+              "name": "surface",
+              "texture": "wood_cream_plane_1375"
+            }
+          ],
+          "points": [
+            [
+              3.0,
+              -3.0,
+              0
+            ],
+            [
+              3.0,
+              3.0,
+              0
+            ]
+          ],
+          "roomId": "0",
+          "type": "Wall"
+        }
+      ],
+      "front": [
+        0,
+        1,
+        0
+      ],
+      "holes": [],
+      "id": "generated-arch",
+      "images": [],
+      "materials": [],
+      "regions": [
+        {
+          "id": "0",
+          "type": "Other",
+          "walls": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
+      "scaleToMeters": 1,
+      "textures": [],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "version": "arch@1.0.2"
+    },
+    "assetSource": [
+      "3dfModel"
+    ],
+    "front": [
+      0,
+      1,
+      0
+    ],
+    "id": "generated-arch",
+    "modifications": [],
+    "object": [],
+    "unit": 1.0,
+    "up": [
+      0,
+      0,
+      1
+    ],
+    "version": "scene@1.0.2"
+  },
+  "selected": []
+}

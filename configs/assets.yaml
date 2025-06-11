@@ -1,0 +1,25 @@
+assets:
+  threed_future:
+      asset_id_prefix: 3dfModel
+      dataset_root_path: _data/3D-FUTURE-model
+      dataset_metadata_path: ${.dataset_root_path}/model_info.json
+  
+  objathor:
+    asset_id_prefix: objaverse
+    dataset_root_path: _data/objathor-assets
+    dataset_metadata_path: ${.dataset_root_path}/annotations.json
+
+# Default asset directories for retrieval
+# _data
+# ├── 3D-FUTURE-model
+# │   ├── 0a0f0cf2-3a34-4ba2-b24f-34f361c36b3e
+# │   |   ├── raw_model.obj
+# │   |   ├── model.mtl
+# │   |   ├── texture.png
+# │   |   ├── ...
+# │   ├── ...
+# └── objathor-assets
+#     ├── 0a0a8274693445a6b533dce7f97f747c
+#     |   ├── 0a0a8274693445a6b533dce7f97f747c.glb
+#     |   ├── ...
+#     ├── ...

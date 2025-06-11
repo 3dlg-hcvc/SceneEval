@@ -1,0 +1,116 @@
+# Common bounding box configuration for ObjObjRelationshipMetric and ObjArchRelationshipMetric
+bounding_box:
+  epsilon: 1e-6
+  sample_points_per_unit_volume: 5000
+  min_num_sample_points: 64
+  presample_points: False
+
+metrics: # Use metric class names as keys (i.e., CamelCase)
+  NavigabilityMetric:
+    calculate_object_area: False
+    image_resolution: 256
+    robot_width: 0.2
+    scale_margin: 0.2
+    obj_height_threshold: 2.0
+    floor_color: [255, 0, 0]
+    obj_color: [0, 255, 0]
+
+  AccessibilityMetric:
+    image_resolution: 256
+    scale_margin: 0.0
+    obj_height_threshold: 2.0
+    access_area_width: 0.2
+    access_area_offset: 0.05
+    floor_color: [255, 0, 0]
+    obj_color: [0, 255, 0]
+    access_area_color: [0, 0, 255]
+
+  CollisionMetric:
+    move_direction_amount: 0.005
+
+  OutOfBoundMetric:
+    threshold: 0.99
+    volume_sample_multiplier: 5000.0
+    min_sample_points: 1000
+
+  SupportMetric:
+    num_samples_per_square_meter: 256
+    min_num_samples: 32
+    support_distance_threshold: 0.01
+    epsilon: 0.005
+    normal_facing_threshold: 0.9
+    # Note: whether to use existing support type assessment is set in evaluation plans
+
+  ObjObjRelationshipMetric:
+    relationship_satisfaction_threshold: 0.5
+    max_candidate_group_renders: 50
+    bounding_box: ${bounding_box}
+    spatial_relation:
+      face_to:
+        max_deviation_degrees: 30.0
+      side_of:
+        no_contain: True # The points should not be inside the reference bounding box
+        within_area_margin: 0.25 # 25% margin expansion for the side face of the reference bounding box to consider the side
+      side_region:
+        no_contain: False # The points can be inside the reference bounding box when checking for side
+        within_area_margin: 1e-9 # The points should be basically within the side face of the reference bounding box
+      long_short_side_of:
+        no_contain: False # The points can be inside the target bounding box (e.g., chair can be inside the table bounding box)
+        within_area_margin: 1e-9 # The points should be basically within the target side face of the reference bounding box
+      on_top:
+        no_contain: False # The points should not be inside the reference bounding box
+        within_area_margin: 1e-9 # The points should be basically within the top face of the reference bounding box
+      middle_of:
+        gaussian_std: 0.25
+      surround:
+        distance_weight: 0.5
+        angle_weight: 0.5
+      distance_score:
+        min_num_sample_points: 64
+        gaussian_std: 0.25
+      next_to:
+        distance_range: [0.0, 0.5]
+      near:
+        distance_range: [0.5, 1.5]
+      across_from:
+        distance_range: [1.5, 4.0]
+      far:
+        distance_range: [4.0, .inf]
+
+  ObjArchRelationshipMetric:
+    relationship_satisfaction_threshold: 0.5
+    bounding_box: ${bounding_box}
+    arch_relation:
+      middle_of_room:
+        base_std_dev: 1.0
+        obj_size_weight: 0.5
+        ratio_weight: 1.0
+      next_to:
+        distance_range: [0.0, 0.5]
+        gaussian_std: 0.25
+      near:
+        distance_range: [0.5, 1.5]
+        gaussian_std: 0.25
+      across_from:
+        distance_range: [1.5, 4.0]
+        gaussian_std: 0.25
+      far:
+        distance_range: [4.0, .inf]
+        gaussian_std: 0.25
+      on_wall:
+        distance_range: [0.0, 0.01]
+        gaussian_std: 0.01
+        no_contain: True
+        within_area_margin: 1e-9
+      against_wall:
+        distance_range: [0.0, 0.3]
+        gaussian_std: 0.1
+        no_contain: True
+        within_area_margin: 1e-9
+      corner_of_room:
+        base_distance_threshold: 0.8
+        gaussian_std: 0.25
+        perpendicular_threshold: 0.15
+      hang_from_ceiling:
+        distance_range: [0.0, 0.01]
+        gaussian_std: 0.03

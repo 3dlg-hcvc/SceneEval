@@ -1,0 +1,6 @@
+vlms:
+  # Use VLM class names as keys (i.e., CamelCase)
+  # Set seed in the main config file
+  GPT:
+    model_name: "gpt-4o-2024-08-06"
+    prompt_file: "./vlm/prompts.yaml"

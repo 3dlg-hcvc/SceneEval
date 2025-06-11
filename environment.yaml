@@ -1,0 +1,49 @@
+name: scene_eval
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.11
+  - pip
+  - numpy<2
+  - pyyaml
+  - tqdm
+  - hydra-core
+  - matplotlib
+  - natsort
+
+  # For GPT
+  - openai
+  - python-dotenv
+  - pydantic
+
+  # For Trimesh
+  - trimesh=4
+  - pyglet<2 # Needed for rendering
+  - scipy
+  - pillow
+  - networkx
+  - rtree
+  - shapely
+  - mapbox_earcut
+
+  # For navigability and accessibility metrics
+  - opencv
+
+  # For data generation
+  - flask
+
+  - pip:
+    - python-fcl  # For trimesh collision detection
+    - manifold3d
+
+    - embreex # For trimesh ray casting (only available on x86 platforms)
+    # Note that while pyembree can be installed with trimesh 3.x on Apple Silicon,
+    # it actually fails when importing it in trimesh/ray/ray_pyembree.py
+    # and trimesh will fall back to using the slower ray casting method anyway
+    # (i.e., trimesh.ray.has_embree = False)
+
+    # Blender
+    - bpy==4.2.0
+    - mathutils
+    - fake-bpy-module-4.2
