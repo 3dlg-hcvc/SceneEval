@@ -178,3 +178,4 @@ output_eval/
 # ----------------------------- Exclude specific files
 !input/empty_scene.json
 !input/human.glb
+!docs/static/images/*.png

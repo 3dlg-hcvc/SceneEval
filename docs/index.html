@@ -40,7 +40,7 @@
 
   <section class="hero">
     <div class="hero-body">
-      <div class="container is-max-widescreen">
+      <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 class="title is-2 publication-title">
@@ -107,12 +107,12 @@
                     <span class="icon">
                       <i class="fab fa-github"></i>
                     </span>
-                    <span>Code</span>
+                    <span>Code (Released!)</span>
                   </a>
                 </span>
                 <!-- Dataset Link. -->
                 <span class="link-block">
-                <a href="" class="external-link button is-normal is-rounded is-dark">
+                <a href="https://github.com/3dlg-hcvc/SceneEval/releases" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="far fa-images"></i>
                   </span>
@@ -128,8 +128,9 @@
     </div>
   </section>
 
+  <!-- Video -->
   <section class="section">
-    <div class="container is-max-widescreen">
+    <div class="container is-max-desktop">
       <!-- Paper video. -->
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
@@ -143,19 +144,16 @@
     </div>  
   </section>
 
+  <!-- Abstract -->
   <section class="section">
-    <div class="container is-max-widescreen">
+    <div class="container is-max-desktop">
       <div class="columns is-centered">
 
-        <!-- Abstract. --> 
         <div class="column is-full-width is-large">
           <div class="column has-text-centered">
 
-            <div class="center-container" style="margin-left: -10px">
-              <!-- <h2 class="title is-3">Abstract</h2> -->
-              <!-- <video autoplay playsinline muted loop controls>
-                <source src="">
-              </video> -->
+            <div class="center-container">
+              <h2 class="title is-3">Abstract</h2>
             </div>
 
             <div class="content has-text-justified mt-4">
@@ -176,32 +174,110 @@
 
           </div>
         </div>
-        <!--/ Abstract. -->
       </div>
     </div>
   </section>
 
+  <!-- Challenges -->
   <section class="section">
-    <div class="container is-max-widescreen">
-      <!-- Methods. -->
+    <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-full-width">
           <div class="content has-text-justified">
             <div class="center-container">
-              <h3 class="title is-3">Under development. More to come soon...</h3>
+              <h3 class="title is-3">Challenges</h3>
             </div>
             <p>
-              In the meantime, explore more of our work <a href="https://3dlg-hcvc.github.io/projects/">here</a>.
+              Scene synthesis faces two primary challenges: adhering to explicit user requirements and meeting implicit expectations,
+              such as physical plausibility, which users often assume but do not explicitly specify. As shown the figure below, both are 
+              crucial for practical applications.
             </p>
+            <figure class="image">
+              <img src="./static/images/explicit_implicit.png" alt="Explicit vs. Implicit Requirements" style="width: 100%; max-width: 800px;">
+            </figure>
           </div>
         </div> 
       </div>  
     </div> 
-    <!--/ Methods. -->
+  </section>
+
+  <!-- Overview -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+            <div class="center-container">
+              <h3 class="title is-3">Overview</h3>
+            </div>
+            <p>
+              Given a generated scene and its corresponding annotated properties,
+              SceneEval first matches object instances in the scene to the annotated categories.
+              It then evaluates the scene on a comprehensive set of fidelity and plausibility metrics.
+            </p>
+            <figure class="image">
+              <img src="./static/images/overview.png" alt="Overview" style="width: 100%; max-width: 800px;">
+            </figure>
+          </div>
+        </div> 
+      </div>  
+    </div> 
+  </section>
+
+  <!-- Annotation -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+            <div class="center-container">
+              <h3 class="title is-3">Dataset: SceneEval-500</h3>
+            </div>
+            <p>
+              To facilitate evaluation, we introduce SceneEval-500,
+              a dataset of scene descriptions with annotations on the expected scene properties.
+              SceneEval-500 contains 500 scene descriptions covering ten room types:
+              bedroom, living room, dining room, playroom, gaming room, kitchen, bathroom, basement, den, and office.
+              We define three difficulty levels for the scene descriptions &mdash; easy, medium, and hard &mdash;
+              based on the complexity of the descriptions in terms of the number of objects specified.
+              The figure below shows an example entry of medium difficulty in SceneEval-500.
+              The scene description describes a basement room, a rarely-seen type in existing datasets.
+              The annotation includes the expected scene properties, such as number of objects, specified in the text.
+            </p>
+            <figure class="image">
+              <img src="./static/images/annotation.png" alt="Annotation" style="width: 100%; max-width: 800px;">
+            </figure>
+          </div>
+        </div> 
+      </div>  
+    </div> 
+  </section>
+
+  <!-- Results -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+            <div class="center-container">
+              <h3 class="title is-3">Results</h3>
+            </div>
+            <p>
+               Examples of scenes generated using text descriptions in SceneEval-500 and the corresponding evaluation results using SceneEval.
+               Our dataset has scene descriptions with annotations of three difficulty levels: easy, medium, and hard.
+               SceneEval provides a comprehensive evaluation of the generated scenes on fidelity and plausibility.
+            </p>
+            <figure class="image">
+              <img src="./static/images/results.png" alt="Results" style="width: 100%; max-width: 800px;">
+            </figure>
+          </div>
+        </div> 
+      </div>  
+    </div> 
   </section>
 
   <section class="section" id="BibTeX">
-    <div class="container is-max-widescreen content">
+    <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
       <pre><code>
       @article{tam2025sceneeval,
@@ -216,7 +292,7 @@
   </section>
 
   <section class="section" id="BibTeX">
-    <div class="container is-max-widescreen content">
+    <div class="container is-max-desktop content">
       <h2 class="title">Acknowledgements</h2>
       <p>
         This work was funded in part by the Sony Research Award Program, a CIFAR AI Chair, a Canada Research Chair, NSERC Discovery Grants, and enabled by support from the <a href="https://alliancecan.ca/">Digital Research Alliance of Canada</a>.
