@@ -134,6 +134,8 @@ If you find SceneEval helpful in your research, please cite our work:
 }
 ```
 
+**Note:** When using SceneEval in your work, we encourage you to specify which version of the code and dataset you are using (e.g., commit hash, release tag, or dataset version) to ensure reproducibility and proper attribution.
+
 ## Acknowledgements
 This work was funded in part by the Sony Research Award Program, a CIFAR AI Chair, a Canada Research Chair, NSERC Discovery Grants, and enabled by support from the [Digital Research Alliance of Canada](https://alliancecan.ca/).
 We thank Nao Yamato, Yotaro Shimose, and other members on the Sony team for their feedback.
