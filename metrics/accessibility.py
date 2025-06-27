@@ -14,6 +14,7 @@ from .registry import register_vlm_metric
 # ----------------------------------------------------------------------------------------
 
 class ObjFunctionalSidesAssessment(BaseModel):
+    obj_id: str
     obj_description: str
     functional_sides: list[str]
     reason: str
@@ -80,7 +81,7 @@ class AccessibilityMetric(BaseMetric):
 
         # Prepare scene information
         self.half_image_resolution = self.cfg.image_resolution // 2
-        self.obj_descriptions = list(self.scene.obj_descriptions.values())
+        self.obj_info = [f"obj_id: '{obj_id}', obj_description: '{self.scene.obj_descriptions[obj_id]}'" for obj_id in self.scene.get_obj_ids()]
         
         t_floors = [t_arch for arch_id, t_arch in scene.t_architecture.items() if arch_id.startswith("floor")]
         self.t_floor = trimesh.util.concatenate(t_floors)
@@ -274,7 +275,7 @@ class AccessibilityMetric(BaseMetric):
         mask_on_floor_size = np.sum(np.all((accessibility_map[access_area_mask == 255] == accessible_color), axis=-1))
         score = mask_on_floor_size / area_mask_size
 
-        print(f"Accessibility score of {self.scene.obj_descriptions[obj_id]} - {side}: {score}")
+        print(f"Accessibility score of {obj_id} ({self.scene.obj_descriptions[obj_id]}) - {side}: {score}")
         
         return score
 
@@ -291,7 +292,7 @@ class AccessibilityMetric(BaseMetric):
 
         # Get the functional sides of the objects
         prompt_info = {
-            "obj_descriptions": str(self.obj_descriptions)
+            "obj_info": "\n".join(self.obj_info)
         }
         response: ObjFunctionalSidesResponseFormat | str = self.vlm.send("obj_functional_sides",
                                                                          prompt_info=prompt_info,
@@ -306,8 +307,7 @@ class AccessibilityMetric(BaseMetric):
         # Compute the accessibility score for each object for each functional side
         accessibility_scores = {}
         for assessment in response.assessments:
-            obj_description = assessment.obj_description
-            obj_id = self.scene.inverse_obj_descriptions[obj_description]
+            obj_id = assessment.obj_id
             accessibility_scores[obj_id] = {}
 
             for side in assessment.functional_sides:

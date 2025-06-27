@@ -4,7 +4,7 @@ from .base import BaseAssetDataset, DatasetConfig, AssetInfo
 from .registry import register_dataset
 
 @register_dataset("objathor")
-class ThreeDFutureAssetDataset(BaseAssetDataset):
+class ObjathorAssetDataset(BaseAssetDataset):
     """
     Dataset for 3D-Future assets.
     """

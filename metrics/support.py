@@ -67,15 +67,8 @@ class SupportMetric(BaseMetric):
         
         self.vlm.reset()
         
-        self.num_samples_per_square_meter = self.cfg.num_samples_per_square_meter
-        self.min_num_samples = self.cfg.min_num_samples
-        self.support_distance_threshold = self.cfg.support_distance_threshold
-        self.epsilon = self.cfg.epsilon
-
-        self.obj_descriptions = list(self.scene.obj_descriptions.values())
-        self.image_paths_per_obj_id: dict[str, list[str]] = {}
-        
         # Get the front and surroundings images for each object
+        self.image_paths_per_obj_id: dict[str, list[str]] = {}
         for obj_id in self.scene.get_obj_ids():
             self.image_paths_per_obj_id[obj_id] = [
                 self.scene.get_obj_render_path(obj_id, "FRONT"),
@@ -196,6 +189,9 @@ class SupportMetric(BaseMetric):
                     obj_matrix = self.scene.get_obj_matrix(obj_id)
                     obj_front_vector = np.asarray(obj_matrix)[:3, :3] @ FRONT_VECTOR
                     gravity_direction = -obj_front_vector # For wall objects, the gravity direction is the back of the object
+                case _:
+                    warn(f"Unknown support type '{support_type}' for object {obj_id}. Defaulting to ground support.", RuntimeWarning)
+                    gravity_direction = np.array([0, 0, -1])
             
             evaluations[obj_id] = {
                 "support_type": support_type,

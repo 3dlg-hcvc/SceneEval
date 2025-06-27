@@ -98,20 +98,23 @@ obj_functional_sides: >
   You are provided with descriptions of the objects in the scene.
   The task is to identify the functional sides of each of the objects.
   Note that for small objects like cups and books that are placed on a surface, do not consider their functional sides and respond with an empty list.
-  Respond in the given response schema. Here is an example response:
+  Respond in the given response schema. Replace the placeholders with the actual object IDs and descriptions. Here is an example response:
   ```
   [
     {
+      "obj_id": "aaaaaaaa.xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
       "obj_description": "bed.n.01 - bed description",
       "functonal_sides": ["front", "left", "right"],
       "reason": "These three sides of a bed have equal importance for accessibility and as long as one of them is accessible, the bed is considered properly placed."
     },
     {
+      "obj_id": "bbbbbbbb.yyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy",
       "obj_description": "chair.n.01 - chair description",
       "functonal_sides": ["front", "back", "left", "right"],
       "reason": "All four sides of a chair are functional because it can be moved and used from any side."
     },
     {
+      "obj_id": "cccccccc.zzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz",
       "obj_description": "cup.n.01 - cup description",
       "functonal_sides": [],
       "reason": "Cups are small objects that do not have functional sides."
@@ -119,8 +122,8 @@ obj_functional_sides: >
     ...
   ]
   ```
-  The descriptions of the objects in the scene are as follows:
-  "<OBJ_DESCRIPTIONS>"
+  The IDs and descriptions of the objects in the scene are as follows:
+  "<OBJ_INFO>"
 obj_relationship_mapping: >
   The user specified the scene to contain certain relationships between objects.
   An object-object relationship is a spatial relationship between two or more objects in the scene.

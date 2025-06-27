@@ -92,9 +92,9 @@ class SpatialRelationEvaluator:
         
         # Ignore the height component and normalize the vectors
         target_bbox_front_2D = target_bbox_front[:2]
-        target_bbox_front_2D /= (np.linalg.norm(target_bbox_front_2D) + target_bbox.epsilon)
+        target_bbox_front_2D /= (np.linalg.norm(target_bbox_front_2D) + target_bbox.cfg.epsilon)
         target_to_reference_direction_2D = target_to_reference_direction[:2]
-        target_to_reference_direction_2D /= (np.linalg.norm(target_to_reference_direction_2D) + target_bbox.epsilon)
+        target_to_reference_direction_2D /= (np.linalg.norm(target_to_reference_direction_2D) + target_bbox.cfg.epsilon)
         
         # The score is calculated based on the deviation of the front vector to the direction to the mean hit point
         dot_product = np.dot(target_bbox_front_2D, target_to_reference_direction_2D)
@@ -375,11 +375,11 @@ class SpatialRelationEvaluator:
         if target_bbox.volume < reference_bbox.volume:
             obj_to_sample_points_from = target_t_obj
             comparison_object = reference_t_obj
-            num_sample_points = int(target_bbox.volume * target_bbox.sample_points_per_unit_volume)
+            num_sample_points = int(target_bbox.volume * target_bbox.cfg.sample_points_per_unit_volume)
         else:
             obj_to_sample_points_from = reference_t_obj
             comparison_object = target_t_obj
-            num_sample_points = int(reference_bbox.volume * reference_bbox.sample_points_per_unit_volume)
+            num_sample_points = int(reference_bbox.volume * reference_bbox.cfg.sample_points_per_unit_volume)
         
         num_sample_points = max(num_sample_points, self.cfg.distance_score.min_num_sample_points)
 
