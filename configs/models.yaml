@@ -1,30 +1,42 @@
 models:
   ATISS:
     input_dir_name: ATISS
-    output_dir_name: ${input_name}
+    output_dir_name: ${models.ATISS.input_dir_name}
     asset_datasets:
       - threed_future
   
   DiffuScene:
     input_dir_name: DiffuScene
-    output_dir_name: ${input_name}
+    output_dir_name: ${models.DiffuScene.input_dir_name}
     asset_datasets:
       - threed_future
   
   InstructScene:
     input_dir_name: InstructScene
-    output_dir_name: ${input_name}
+    output_dir_name: ${models.InstructScene.input_dir_name}
     asset_datasets:
       - threed_future
   
   LayoutGPT:
     input_dir_name: LayoutGPT
-    output_dir_name: ${input_name}
+    output_dir_name: ${models.LayoutGPT.input_dir_name}
     asset_datasets:
       - threed_future
   
   Holodeck:
     input_dir_name: Holodeck
-    output_dir_name: ${input_name}
+    output_dir_name: ${models.Holodeck.input_dir_name}
     asset_datasets:
       - objathor
+  
+  HSM:
+    input_dir_name: HSM
+    output_dir_name: ${models.HSM.input_dir_name}
+    asset_datasets:
+      - hssd
+  
+  LayoutVLM:
+    input_dir_name: LayoutVLM
+    output_dir_name: ${models.LayoutVLM.input_dir_name}
+    asset_datasets:
+      - layoutvlm_objathor

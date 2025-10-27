@@ -2,13 +2,14 @@ evaluation_cfg:
   metrics:
     # - ObjCountMetric
     # - ObjAttributeMetric
+    # - ObjObjRelationshipMetric
+    # - ObjArchRelationshipMetric
     # - CollisionMetric
     # - SupportMetric
     # - NavigabilityMetric
     # - AccessibilityMetric
     # - OutOfBoundMetric
-    # - ObjObjRelationshipMetric
-    # - ObjArchRelationshipMetric
+    # - OpeningClearanceMetric
   output_dir: ./output_eval
   save_blend_file: True
   vlm: GPT
@@ -26,6 +27,8 @@ input_cfg:
     # - InstructScene
     # - LayoutGPT
     # - Holodeck
+    # - HSM
+    # - LayoutVLM
   method_use_simple_architecture: []
   scene_mode: range # all, range, list
   scene_range: [0, 100] # Left inclusive, right exclusive

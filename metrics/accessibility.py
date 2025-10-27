@@ -190,6 +190,7 @@ class AccessibilityMetric(BaseMetric):
         plt.savefig(self.output_dir / "a0_mask.png")
         if verbose:
             plt.show(block=True)
+        plt.close()
 
         return mask
     
@@ -268,6 +269,7 @@ class AccessibilityMetric(BaseMetric):
         plt.savefig(self.output_dir / f"a1_{obj_id}-{side}.png")
         if verbose:
             plt.show(block=True)
+        plt.close()
         
         # Compute the accessibility score as the ratio of the access area on the floor that is not blocked by other objects
         area_mask_size = np.sum(access_area_size_canvas == 255)

@@ -44,6 +44,6 @@ dependencies:
     # (i.e., trimesh.ray.has_embree = False)
 
     # Blender
-    - bpy==4.2.0
+    - bpy==4.2.13
     - mathutils
     - fake-bpy-module-4.2

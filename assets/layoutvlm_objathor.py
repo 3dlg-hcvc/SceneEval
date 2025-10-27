@@ -3,10 +3,10 @@ from pathlib import Path
 from .base import BaseAssetDataset, DatasetConfig, AssetInfo
 from .registry import register_dataset
 
-@register_dataset("objathor")
-class ObjathorAssetDataset(BaseAssetDataset):
+@register_dataset("layoutvlm_objathor")
+class LayoutVLMObjathorAssetDataset(BaseAssetDataset):
     """
-    Dataset for Objathor assets.
+    Dataset for LayoutVLM-Objathor assets.
     """
 
     def __init__(self, dataset_config: DatasetConfig) -> None:
@@ -19,13 +19,6 @@ class ObjathorAssetDataset(BaseAssetDataset):
         
         self.asset_id_prefix = dataset_config.asset_id_prefix
         self.root_dir = Path(dataset_config.dataset_root_path).expanduser().resolve()
-        self.metadata_path = Path(dataset_config.dataset_metadata_path).expanduser().resolve()
-        
-        if self.metadata_path.exists():
-            with open(self.metadata_path, "r") as f:
-                self.metadata = json.load(f)
-        else:
-            raise FileNotFoundError(f"Metadata file {self.metadata_path} not found.")
     
     def get_asset_info(self, asset_id: str) -> AssetInfo:
         """
@@ -39,15 +32,16 @@ class ObjathorAssetDataset(BaseAssetDataset):
         """
         
         file_path = self.root_dir / asset_id / f"{asset_id}.glb"
+        asset_data_json_path = self.root_dir / asset_id / "data.json"
         
-        metadata = self.metadata[asset_id]
-        asset_description = metadata["category"]
-        if metadata["ref_category"] is not None or metadata["ref_category"] != "":
-            asset_description += f" - {metadata['ref_category']}"
-        if metadata["description"] is not None or metadata["description"] != "":
-            asset_description += f", {metadata['description']}"
-        elif metadata["description_auto"] is not None or metadata["description_auto"] != "":
-            asset_description += f", {metadata['description_auto']}"
+        if asset_data_json_path.exists() is False:
+            raise FileNotFoundError(f"Asset data file {asset_data_json_path} not found.")
+
+        with open(asset_data_json_path, "r") as f:
+            asset_data_json = json.load(f)
+        metadata = asset_data_json["annotations"]
+
+        asset_description = f"{metadata['category']}, {metadata['description']}, {metadata['materials']}"
         
         return AssetInfo(
             asset_id=asset_id,

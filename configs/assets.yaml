@@ -1,25 +1,56 @@
 assets:
   threed_future:
-      asset_id_prefix: 3dfModel
-      dataset_root_path: _data/3D-FUTURE-model
-      dataset_metadata_path: ${.dataset_root_path}/model_info.json
+    asset_id_prefix: 3dfModel
+    dataset_root_path: _data/3D-FUTURE-model
+    dataset_metadata_path: ${.dataset_root_path}/model_info.json
   
   objathor:
     asset_id_prefix: objaverse
     dataset_root_path: _data/objathor-assets
     dataset_metadata_path: ${.dataset_root_path}/annotations.json
+  
+  hssd:
+    asset_id_prefix: fpModel
+    dataset_root_path: _data/hssd
+    dataset_metadata_path: ${.dataset_root_path}/fpmodels.csv
+  
+  layoutvlm_objathor:
+    asset_id_prefix: layoutvlm-objaverse
+    dataset_root_path: _data/layoutvlm-objathor
+    dataset_metadata_path: null # No central metadata file, info is in each asset's data.json
 
 # Default asset directories for retrieval
 # _data
 # ├── 3D-FUTURE-model
+# │   ├── model_info.json
 # │   ├── 0a0f0cf2-3a34-4ba2-b24f-34f361c36b3e
 # │   |   ├── raw_model.obj
 # │   |   ├── model.mtl
 # │   |   ├── texture.png
 # │   |   ├── ...
 # │   ├── ...
-# └── objathor-assets
-#     ├── 0a0a8274693445a6b533dce7f97f747c
-#     |   ├── 0a0a8274693445a6b533dce7f97f747c.glb
-#     |   ├── ...
-#     ├── ...
+# ├── objathor-assets
+# │   ├── annotations.json
+# │   ├── 0a0a8274693445a6b533dce7f97f747c
+# │   |   ├── 0a0a8274693445a6b533dce7f97f747c.glb
+# │   |   ├── ...
+# │   ├── ...
+# ├── layoutvlm-objathor
+# │   ├── 0a3dc72fb1bb41439005cac4a3ebb765
+# │   |   ├── 0a3dc72fb1bb41439005cac4a3ebb765.glb
+# │   |   ├── data.json
+# │   |   ├── ...
+# │   ├── ...
+# └── hssd
+#     ├── fpmodels.csv
+#     ├── glb
+#     │   ├── 0
+#     │   |   ├── 0a0b9f607345b6cee099d681f28e19e1f0a215c8.glb
+#     │   |   ├── ...
+#     │   ├── ...
+#     └── decomposed
+#         ├── 00a2b0f3886ccb5ffddac704f8eeec324a5e14c6
+#         |   ├── 00a2b0f3886ccb5ffddac704f8eeec324a5e14c6_part_1.glb
+#         |   ├── 00a2b0f3886ccb5ffddac704f8eeec324a5e14c6_part_2.glb
+#         |   ├── ...
+#         ├── ...

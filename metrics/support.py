@@ -19,6 +19,7 @@ class SupportMetricConfig:
     Attributes:
         num_samples_per_square_meter: the number of samples per square meter
         min_num_samples: the minimum number of samples
+        max_total_num_samples: the maximum total number of samples
         support_distance_threshold: the distance threshold to consider as support
         epsilon: the epsilon value to move the object slightly in reverse of the gravity direction
         normal_facing_threshold: threshold for normals facing gravity direction
@@ -27,6 +28,7 @@ class SupportMetricConfig:
 
     num_samples_per_square_meter: int = 256
     min_num_samples: int = 32
+    max_total_num_samples: int = 1e5
     support_distance_threshold: float = 0.01
     epsilon: float = 0.005
     normal_facing_threshold: float = 0.9
@@ -245,6 +247,11 @@ class SupportMetric(BaseMetric):
                 face_vertices = t_obj.vertices[gravity_facing_faces]
                 max_face_area = np.max(trimesh.triangles.area(face_vertices))
                 num_samples_per_face = max(self.cfg.min_num_samples, int(max_face_area * self.cfg.num_samples_per_square_meter))
+                
+                if num_samples_per_face * len(face_vertices) > self.cfg.max_total_num_samples:
+                    num_samples_per_face = max(int(self.cfg.max_total_num_samples / len(face_vertices)), 1)
+                    print(f"Warning: Capping the number of samples per face to {num_samples_per_face} to avoid excessive total samples.")
+                
                 face_sampled_points = self._sample_points_in_triangles(face_vertices[:, 0], face_vertices[:, 1], face_vertices[:, 2], num_samples_per_face)
                 ray_origins = np.concatenate([ray_origins, face_sampled_points.reshape(-1, 3)], axis=0)
             

@@ -138,6 +138,7 @@ class NavigabilityMetric(BaseMetric):
         plt.savefig(self.output_dir / "n0_floor_plan.png")
         if verbose:
             plt.show(block=True)
+        plt.close()
 
         # Erode the floor with robot width to simulate robot size
         robot_width = int(self.cfg.robot_width / self.scale * self.half_image_resolution)
@@ -149,6 +150,7 @@ class NavigabilityMetric(BaseMetric):
         plt.savefig(self.output_dir / "n1_eroded_floor_plan.png")
         if verbose:
             plt.show(block=True)
+        plt.close()
 
         # Prepare object bounding box info
         # Schema: [center_x, center_y, extent_x, extent_y, angle_around_z]
@@ -191,6 +193,7 @@ class NavigabilityMetric(BaseMetric):
         plt.savefig(self.output_dir / "n2_eroded_floor_plan_with_bboxes.png")
         if verbose:
             plt.show(block=True)
+        plt.close()
 
         # Calculate object to floor plan area ratio
         if self.cfg.calculate_object_area:
@@ -213,6 +216,7 @@ class NavigabilityMetric(BaseMetric):
         plt.savefig(self.output_dir / "n3_walkable_map.png")
         if verbose:
             plt.show(block=True)
+        plt.close()
 
         # TODO: Support for doors
 
@@ -229,6 +233,7 @@ class NavigabilityMetric(BaseMetric):
                 plt.savefig(self.output_dir / f"n4_connected_component_{label}.png")
                 if verbose:
                     plt.show(block=True)
+                plt.close()
 
                 if mask.sum() > walkable_map_max.sum():
                     walkable_map_max = mask.copy()
@@ -241,6 +246,7 @@ class NavigabilityMetric(BaseMetric):
             plt.savefig(self.output_dir / "n5_largest_connected_component.png")
             if verbose:
                 plt.show(block=True)
+            plt.close()
         else:
             rate = 0.
 

@@ -60,11 +60,12 @@ class EvaluationPlan:
 
 # ========================================================================================
 
-def _fetch_scene_state_files(evaluation_plan: EvaluationPlan) -> dict[str, list[pathlib.Path]]:
+def _fetch_scene_state_files(model_cfg: DictConfig, evaluation_plan: EvaluationPlan) -> dict[str, list[pathlib.Path]]:
     """
     Fetch scene state files for the given methods based on the evaluation plan.
     
     Args:
+        model_cfg: the model configuration containing asset dataset information.
         evaluation_plan: the evaluation plan containing input configurations.
         
     Returns:
@@ -74,7 +75,7 @@ def _fetch_scene_state_files(evaluation_plan: EvaluationPlan) -> dict[str, list[
     scenes_per_method = {}
     
     for method in evaluation_plan.input_cfg.scene_methods:
-        method_dir = pathlib.Path(evaluation_plan.input_cfg.root_dir) / method
+        method_dir = pathlib.Path(evaluation_plan.input_cfg.root_dir) / model_cfg[method].input_dir_name
         scene_files = natsorted(list(method_dir.expanduser().resolve().glob("*.json")))
         id_to_file = {int(scene_file.stem.split("_")[-1]): scene_file for scene_file in scene_files}
         
@@ -158,10 +159,6 @@ def main(cfg: DictConfig) -> None:
     else:
         print("\nNo random seed set.\n")
 
-    # Localize paths with environment variables
-    blender_42_dir = pathlib.Path(os.getenv("BLENDER_42_DIR"))
-    cfg.blender.environment_map = str(blender_42_dir / cfg.blender.environment_map)
-
     # ----------------------------------------------------------------------------------------
 
     # Load evaluation plan
@@ -176,7 +173,7 @@ def main(cfg: DictConfig) -> None:
         ))
     
     # Fetch all scene state files that are to be evaluated
-    scenes_per_method = _fetch_scene_state_files(evaluation_plan)
+    scenes_per_method = _fetch_scene_state_files(cfg.models, evaluation_plan)
     print(f"\nEvaluating scenes for methods: {list(scenes_per_method.keys())}")
     for method, scene_files in scenes_per_method.items():
         print(f"{method} scenes:")
@@ -245,7 +242,7 @@ def main(cfg: DictConfig) -> None:
                     scene_state.name = method_scene_file.stem
             
             # Create the output directory
-            output_dir: pathlib.Path = pathlib.Path(evaluation_plan.evaluation_cfg.output_dir) / method / scene_state.name
+            output_dir: pathlib.Path = pathlib.Path(evaluation_plan.evaluation_cfg.output_dir) / cfg.models[method].output_dir_name / scene_state.name
             output_dir.mkdir(parents=True, exist_ok=True)
                 
             # Create the scene with output directory

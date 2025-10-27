@@ -8,213 +8,217 @@
 
 [Page](https://3dlg-hcvc.github.io/SceneEval/) | [Paper](https://arxiv.org/abs/2503.14756) | [Data](https://github.com/3dlg-hcvc/SceneEval/releases)
 
+
+
+## News
+- 2025-10-27: Release v1.1 with a new metric *Opening Clearance*, support for [LayoutVLM](https://github.com/sunfanyunn/LayoutVLM) and [HSM](https://github.com/3dlg-hcvc/hsm), bug fixes, and more! The environment setup is now simplified and the demo is easier to run! Give it a try!
+- 2025-06-27: Codebase release v1.0!
+- 2025-06-10: Released SceneEval-500 dataset and v0.9 of the SceneEval codebase!
+
+
+
 ## Todo List
 - [x] Add documentation for the scene state format
 - [x] Provide script for downloading and processing Holodeck's assets
-- [ ] Create guide for extending SceneEval with new methods and metrics
+- [x] Create guide for extending SceneEval with new methods and metrics
+- [ ] Replace custom VLM interface with Pydantic AI
 
-## Getting Started
+
+
+## Environment Setup
 
 ### 1. Environment Setup
-First, create and activate the conda environment:
+First, create and activate the [conda](https://www.anaconda.com/docs/getting-started/miniconda/main) environment:
 ```bash
 conda env create -f environment.yaml
 conda activate scene_eval
 ```
 
-### 2. Download Blender
-SceneEval requires **Blender 4.2 LTS** for 3D scene rendering and visualization.
+### 2. (Optional) Setup OpenAI API Key
+SceneEval requires an VLM to run certain metrics.
 
-Download and install Blender 4.2 LTS from the [official Blender website](https://www.blender.org/download/lts/4-2/).
+Metrics that DO NOT require a VLM are:
+- *Collision*, *Navigability*, *Out of Bounds*, and *Opening Clearance* 
 
-### 3. Environment Configuration
-Create a `.env` file in the root directory following the template in `.env.example`. This file should contain a path to your Blender installation and your OpenAI API key.
+Metrics that REQUIRE a VLM are:
+- *Object Count*, *Object Attribute*, *Object-Object Relationship*, *Object-Architecture Relationship*, *Object Support*, *Object Accessibility*
 
-### 4. Download Dataset
-Download the SceneEval-500 annotations from this repository's [Releases](https://github.com/3dlg-hcvc/SceneEval/releases) page and place the `annotations.csv` file in the `input` directory. Your structure should look like:
+To run the metrics that require a VLM, the default implementation uses OpenAI's GPT-4o, so you will need an OpenAI API key. (The demo )
+
+Create a `.env` file in the root directory following the template in `.env.example`, and add your OpenAI API key:
+```
+OPENAI_API_KEY=<your_openai_api_key_here>
+```
+
+
+## Dataset and 3D Assets Setup
+
+### 1. Download SceneEval-500 Dataset
+Download the SceneEval-500 annotations from this repository's [Releases](https://github.com/3dlg-hcvc/SceneEval/releases/tag/SceneEval-500_v250610) page and place the `annotations.csv` file in the `input` directory. The structure should look like:
 ```
 .
-├── input
-│   ├── human.glb
-│   ├── empty_scene.json
-│   ├── annotations.csv
+└── input
+    ├── annotations.csv
+    ├── empty_scene.json
+    ├── hotel_room_1k.exr
+    ├── human.glb
+    └── ...
 ```
 
 **Dataset Composition:**
 - **SceneEval-100**: The first 100 entries (IDs 0-99) are manually created
 - **SceneEval-500**: The full dataset includes 400 additional entries generated semi-automatically using a VLM
 
-If you wish to use only the first 100 entries, you can edit `annotations.csv` to keep only rows with IDs 0-99.
+### 2. Download 3D Assets
 
-### 5. Download 3D Assets
+SceneEval needs 3D assets to recreate scenes from different generation methods.
+You only need to download the assets for the methods you want to evaluate.
 
-SceneEval needs 3D assets to recreate scenes from different generation methods. Download the assets required for the methods you want to evaluate:
+<details>
+<summary><strong>
+For 3D-FUTURE methods
+<a href="https://github.com/nv-tlabs/ATISS">ATISS</a>,
+<a href="https://github.com/tangjiapeng/DiffuScene">DiffuScene</a>,
+<a href="https://github.com/weixi-feng/LayoutGPT">LayoutGPT</a>,
+<a href="https://github.com/chenguolin/InstructScene">InstructScene</a>
+</strong></summary>
 
-**For 3D-FUTURE methods** (ATISS, DiffuScene, LayoutGPT, InstructScene):
 1. Visit the [3D-FUTURE dataset page](https://tianchi.aliyun.com/specials/promotion/alibaba-3d-future)
 2. Follow their download instructions
 3. Place the downloaded assets in `_data/3D-FUTURE-model/`
 
-**For Objathor methods** (Holodeck):
-Run our automated download script:
+</details>
+
+<details>
+<summary><strong>
+For <a href="https://github.com/allenai/Holodeck">Holodeck</a>
+</strong></summary>
+
+Run our automated download script to download and preprocess the Objathor assets they use:
 ```bash
 python scripts/prepare_objathor.py
 
 # On Linux, you may see an `directory not empty` error; this is an issue in the original Objathor download script and can be ignored. Simply enter 'y' and press Enter when prompted.
 ```
+</details>
 
-Your final `_data` directory structure should look like:
+<details id="layoutvlm">
+<summary><strong>
+For <a href="https://github.com/sunfanyunn/LayoutVLM">LayoutVLM</a>
+</strong></summary>
+
+1. Download their preprocessed assets from [their repo](https://github.com/sunfanyunn/LayoutVLM?tab=readme-ov-file#data-preprocessing).
+2. Unzip and place the contents in `_data/layoutvlm-objathor/`
+
+</details>
+
+
+<details>
+<summary><strong>
+For <a href="https://github.com/3dlg-hcvc/HSM">HSM</a>
+</strong></summary>
+
+HSM uses assets from the [Habitat Synthetic Scenes Dataset (HSSD)](https://3dlg-hcvc.github.io/hssd/).
+Some assets are compressed with *KHR_texture_basisu*, which is currently not supported by Blender.
+We provide a script to download and decompress the assets into Blender-compatible GLB files.
+
+Prerequisites:
+1. [Agree to the HSSD dataset license on HuggingFace](https://huggingface.co/datasets/hssd/hssd-models)
+       
+2. Set up to clone repos from HuggingFace using SSH or HTTPS:
+    - For SSH: [set up SSH keys on your machine and add the public key to your HuggingFace account](https://huggingface.co/docs/hub/en/security-git-ssh)
+    - For HTTPS: [prepare to enter your HuggingFace access token with write permissions when prompted](https://huggingface.co/docs/hub/en/security-tokens)
+
+3. Install *gltf-transform* and *ktx* command line tools and ensure they are in your PATH:
+    - [gltf-transform](https://www.npmjs.com/package/@gltf-transform/cli) via npm: `npm install -g @gltf-transform/cli`
+    - [ktx](https://github.com/KhronosGroup/KTX-Software/releases) from the KhronosGroup/KTX-Software repository
+
+Then run the script:
+```bash
+python scripts/prepare_hsm.py
 ```
-.
-└── _data
-    ├── 3D-FUTURE-model
-    │   ├── 0a0f0cf2-3a34-4ba2-b24f-34f361c36b3e
-    │   │   ├── raw_model.obj
-    │   │   ├── model.mtl
-    │   │   ├── texture.png
-    │   │   └── ...
-    │   ├── ...
-    │   └── model_info.json
-    │
-    └── objathor-assets
-        ├── 0a0a8274693445a6b533dce7f97f747c
-        │   ├── 0a0a8274693445a6b533dce7f97f747c.glb
-        │   ├── ...
-        ├── ...
-        └── annotations.json
+
+</details>
+
+---
+<details>
+<summary><strong>
+Your <code>_data/</code> directory should look like this if you have all assets downloaded
+</strong></summary>
+
 ```
+_data
+├── 3D-FUTURE-model
+│   ├── model_info.json
+│   ├── 0a0f0cf2-3a34-4ba2-b24f-34f361c36b3e
+│   |   ├── raw_model.obj
+│   |   ├── model.mtl
+│   |   ├── texture.png
+│   |   ├── ...
+│   ├── ...
+├── objathor-assets
+│   ├── annotations.json
+│   ├── 0a0a8274693445a6b533dce7f97f747c
+│   |   ├── 0a0a8274693445a6b533dce7f97f747c.glb
+│   |   ├── ...
+├── layoutvlm-objathor
+│   ├── 0a3dc72fb1bb41439005cac4a3ebb765
+│   |   ├── 0a3dc72fb1bb41439005cac4a3ebb765.glb
+│   |   ├── data.json
+│   |   ├── ...
+│   ├── ...
+└── hssd
+    ├── fpmodels.csv
+    ├── glb
+     │   ├── 0
+     │   |   ├── 0a0b9f607345b6cee099d681f28e19e1f0a215c8.glb
+     │   |   ├── ...
+     │   ├── ...
+     └── decomposed
+         ├── 00a2b0f3886ccb5ffddac704f8eeec324a5e14c6
+         |   ├── 00a2b0f3886ccb5ffddac704f8eeec324a5e14c6_part_1.glb
+         |   ├── 00a2b0f3886ccb5ffddac704f8eeec324a5e14c6_part_2.glb
+         |   ├── ...
+         ├── ...
+```
+
+</details>
+
 
 ## Quick Start Demo
 
-Try SceneEval with our provided example scenes:
+Try SceneEval with our provided example scenes. You do *not* need an OpenAI API key for this demo.
 
-### 1. Set Up Input Data
-Copy the example scenes to your input directory:
+### 1. Download the LayoutVLM Assets
+Follow the instructions in the [*For LayoutVLM*](#layoutvlm) section above to download the LayoutVLM assets.
+
+### 2. Run the Demo
 ```bash
+# Copy provided example scenes to input directory
 cp -r input_example/* input/
-```
 
-### 2. Configure the Evaluation
-Edit `configs/config.yaml` to use the demo evaluation plan:
-```yaml
-evaluation_plan: eval_plan
-```
-
-Then edit `configs/evaluation_plan/eval_plan.yaml` to customize what to evaluate:
-- **Methods**: Uncomment the methods you want to test (`ATISS`, `DiffuScene`, `LayoutGPT`, `InstructScene`)
-- **Scenes**: For a quick test, set `scene_mode: list` and `scene_list: [0]` to evaluate just the first scene
-
-### 3. Run the Demo
-```bash
+# Run SceneEval
 python main.py
 ```
+This will run the evaluation on five example scenes generated by LayoutVLM using the `no_llm_plan` evaluation plan, which runs the following metrics: *Collision*, *Navigability*, *Out of Bounds*, and *Opening Clearance*.
 
 Results will be saved to `./output_eval`.
 
-## Evaluating Your Own Scene Generation Method
 
-SceneEval can easily evaluate your own scene generation methods by following these steps:
 
-### 1. Convert Your Scenes to Scene State Format
+## Extending SceneEval to a New Method or Dataset
 
-SceneEval uses the [Scene State format](https://github.com/smartscenes/sstk/wiki/Scene-State-Format) to represent 3D scenes. This JSON format describes:
-- Room architecture (walls, doors, windows)
-- Object placements
+SceneEval is built to be extensible! You can easily add new scene generation methods, evaluation metrics, and assets.
 
-**Quick Start:** Use our [scene state template](./scene_state_template.json) as a starting point. This template shows all required fields and structure.
+**[Follow this step-by-step guide to see how to add a new method that uses a new 3D asset source.](./GUIDE.md)**
 
-**Key Requirements:**
-- Each scene must be a separate JSON file
-- Objects need valid 3D asset IDs that SceneEval can retrieve
-- Room architecture must define walls, floors, and any openings
 
-### 2. Organize Your Scene Files
 
-Create a directory structure under `input/` for your method:
-
-```
-input/
-├── annotations.csv          # SceneEval dataset annotations
-├── YOUR_METHOD_NAME/
-│   ├── scene_0.json         # Scene for annotation ID 0
-│   ├── scene_1.json         # Scene for annotation ID 1
-│   └── ...
-```
-
-**Important:** Scene filenames must match annotation IDs (e.g., `scene_0.json` for annotation with `id=0`).
-
-### 3. Configure Your Method
-
-Add your method to `configs/models.yaml`:
-
-```yaml
-models:
-  YOUR_METHOD_NAME:
-    input_dir_name: YOUR_METHOD_NAME    # Matches folder name in input/
-    output_dir_name: ${input_name}      # Where results will be saved
-    asset_datasets:                     # 3D assets your method uses
-      - threed_future                   # For 3D-FUTURE assets
-      # - objathor                      # For Objathor assets
-      # - your_custom_dataset           # For custom assets (see step 4)
-```
-
-### 4. (Optional) Add Support for Custom 3D Assets
-
-If your method uses custom 3D assets not covered by 3D-FUTURE or Objathor:
-
-1. Create a new asset dataset class in `assets/` that extends `BaseAssetsDataset`
-2. Implement methods to map object IDs to asset file paths and descriptions  
-3. See `assets/threed_future.py` as an example implementation
-
-*Need help? Open an issue or submit a pull request to add your dataset!*
-
-### 5. Configure the Evaluation Plan
-
-Edit the `configs/evaluation_plan/eval_plan.yaml` file to set up your evaluation:
-
-```yaml
-evaluation_cfg:
-  metrics_cfg:
-    # Uncomment metrics you want to run
-    - ObjCountMetric
-    - ObjAttributeMetric
-    # - CollisionMetric
-    - ...
-  input_cfg:
-    scene_methods:
-      # Uncomment methods you want to evaluate
-      # - ATISS
-      # - DiffuScene
-      # - InstructScene
-      # - LayoutGPT
-      # - Holodeck
-      - YOUR_METHOD_NAME  # Your method name
-    
-    # Evaluate "all" scenes / "range" for a range / "list" for specific scenes
-    scene_mode: "all"
-```
-
-Update `configs/config.yaml` to use your plan:
-```yaml
-evaluation_plan: eval_plan  # Name of your evaluation plan file
-```
-
-### 6. Run the Evaluation
-
-Execute the evaluation:
-```bash
-python main.py
-```
-
-Results will be saved to `output_eval/YOUR_METHOD_NAME/` by default.
-
-## Extending SceneEval
-
-SceneEval is built to be extensible! You can easily add new scene generation methods, evaluation metrics, and assets. 
+## Contributing to SceneEval
 
 Found a bug or want to contribute a new method or metric? We'd love your help! Please open an issue or submit a pull request. 
 
-We're working on comprehensive documentation for extending SceneEval and will have it available soon.
+
 
 ## Citation
 If you find SceneEval helpful in your research, please cite our work:

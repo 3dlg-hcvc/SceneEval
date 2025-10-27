@@ -9,6 +9,7 @@ from .support import SupportMetric, SupportMetricConfig
 from .navigability import NavigabilityMetric, NavigabilityMetricConfig
 from .accessibility import AccessibilityMetric, AccessibilityMetricConfig
 from .out_of_bound import OutOfBoundMetric, OutOfBoundMetricConfig
+from .opening_clearance import OpeningClearanceMetric, OpeningClearanceMetricConfig
 
 from .registry import MetricRegistry, register_non_vlm_metric, register_vlm_metric
 
@@ -31,6 +32,8 @@ __all__ = [
     "AccessibilityMetricConfig",
     "OutOfBoundMetric",
     "OutOfBoundMetricConfig",
+    "OpeningClearanceMetric",
+    "OpeningClearanceMetricConfig",
     
     # Registry components
     "MetricRegistry",

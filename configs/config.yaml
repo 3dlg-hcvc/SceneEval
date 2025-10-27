@@ -4,7 +4,7 @@ defaults:
   - models
   - metrics
   - vlms
-  - evaluation_plan: eval_plan
+  - evaluation_plan: no_llm_plan
 
 seed: 42
 
@@ -22,7 +22,7 @@ blender:
   trace_max_roughness: 0.025
   resolution_x: 512
   resolution_y: 512
-  environment_map: datafiles/studiolights/world/interior.exr # Relative to the Blender installation directory - "BLENDER_42_DIR" in .env
+  environment_map: ./input/hotel_room_1k.exr
   environment_map_strength: 0.75
   use_transparent_film: True
   render_file_format: PNG

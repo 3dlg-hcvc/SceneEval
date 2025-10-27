@@ -1,0 +1,7 @@
+human.glb
+- From: Blender Asset Bundles, Human Base Meshes (CC0 License)
+- Source: https://developer.blender.org/docs/release_notes/4.0/asset_bundles/
+
+hotel_room_1k.exr
+- From: Poly Heaven, by Greg Zaal (CC0 License)
+- Source: https://polyhaven.com/a/hotel_room

@@ -4,49 +4,48 @@ evaluation_cfg:
     # - ObjAttributeMetric
     # - ObjObjRelationshipMetric
     # - ObjArchRelationshipMetric
-    # - CollisionMetric
+    - CollisionMetric
     # - SupportMetric
-    # - NavigabilityMetric
+    - NavigabilityMetric
     # - AccessibilityMetric
-    # - OutOfBoundMetric
-    # - OpeningClearanceMetric
+    - OutOfBoundMetric
+    - OpeningClearanceMetric
   output_dir: ./output_eval
   save_blend_file: True
   vlm: GPT
   use_existing_matching: True
-  use_empty_matching_result: False
+  use_empty_matching_result: True
   support_metric_use_existing_support_type_assessment: False
-  no_eval: True
+  no_eval: False
   verbose: False
 
 input_cfg:
   root_dir: ./input
   scene_methods:
-    - ATISS
+    # - ATISS
     # - DiffuScene
     # - InstructScene
     # - LayoutGPT
     # - Holodeck
     # - HSM
-    # - LayoutVLM
+    - LayoutVLM
   method_use_simple_architecture: []
   scene_mode: range # all, range, list
-  scene_range: [0, 100] # Left inclusive, right exclusive
+  scene_range: [0, 5] # Left inclusive, right exclusive
   scene_list: []
   annotation_file: ./input/annotations.csv
 
 render_cfg:
   normal_render_tasks:
+    - scene_top
+    - obj_solo
+    # - obj_size
+    # - obj_surroundings
+    # - obj_global_top
+  semantic_render_tasks:
     # - scene_top
     # - obj_solo
     # - obj_size
     # - obj_surroundings
     # - obj_global_top
-  semantic_render_tasks:
-    - scene_top
-    - obj_solo
-    - obj_size
-    - obj_surroundings
-    - obj_global_top
   semantic_color_reference: null
-  # semantic_color_reference: "./output_eval/ATISS/scene_*/semantic_color_reference.json"

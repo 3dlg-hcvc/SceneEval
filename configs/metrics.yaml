@@ -1,4 +1,4 @@
-# Common bounding box configuration for ObjObjRelationshipMetric and ObjArchRelationshipMetric
+# Common bounding box configuration for ObjObjRelationshipMetric, ObjArchRelationshipMetric, etc.
 bounding_box:
   epsilon: 1e-6
   sample_points_per_unit_volume: 5000
@@ -36,6 +36,7 @@ metrics: # Use metric class names as keys (i.e., CamelCase)
   SupportMetric:
     num_samples_per_square_meter: 256
     min_num_samples: 32
+    max_total_num_samples: 1e5
     support_distance_threshold: 0.01
     epsilon: 0.005
     normal_facing_threshold: 0.9
@@ -114,3 +115,15 @@ metrics: # Use metric class names as keys (i.e., CamelCase)
       hang_from_ceiling:
         distance_range: [0.0, 0.01]
         gaussian_std: 0.03
+
+  OpeningClearanceMetric:
+    bounding_box: ${bounding_box}
+    within_room_point_offset: 0.1
+    map_pixel_per_meter: 100
+    door_check: True
+    door_room_side_only: True
+    door_use_width_as_extrude: True
+    door_extrude_distance: 1.0
+    window_check: True
+    window_room_side_only: True
+    window_front_extrude_distance: 0.5

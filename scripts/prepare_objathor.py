@@ -362,7 +362,7 @@ def subprocess_main(data_dir: Path, dataset_dir_name: str, process_id: int, asse
 # ======================================================================================
 
 if __name__ == "__main__":
-    DEFAULT_DATA_DIR = "./_data"
+    DEFAULT_DATA_DIR = "_data"
     DEFAULT_DATASET_DIR_NAME = "objathor-assets"
     
     parser = argparse.ArgumentParser(description="Download and process objathor dataset for SceneEval.")
@@ -404,7 +404,7 @@ if __name__ == "__main__":
     main(data_dir=args.data_dir, dataset_dir_name=args.dataset_dir_name, num_processes=args.num_processes)
 
     print("\n > Successfully downloaded and processed the objathor dataset for SceneEval.\n")
-    if args.data_dir != DEFAULT_DATA_DIR:
+    if str(args.data_dir) != DEFAULT_DATA_DIR:
         print(f"Warning: You specified a custom data directory: {args.data_dir}. You may need to adjust configs accordingly in SceneEval.")
     if args.dataset_dir_name != DEFAULT_DATASET_DIR_NAME:
         print(f"Warning: You specified a custom dataset directory name: {args.dataset_dir_name}. You may need to adjust configs accordingly in SceneEval.")

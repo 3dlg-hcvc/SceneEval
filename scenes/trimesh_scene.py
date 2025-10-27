@@ -246,10 +246,14 @@ class TrimeshScene:
                                 hole_box.apply_translation([hole_center[0], 0, hole_center[1]])
                                 
                                 # Make the hole in the wall
-                                # wall = trimesh.boolean.difference([wall, hole_box], engine="scad") # For trimesh 3.x
-                                wall = trimesh.boolean.difference([wall, hole_box], engine="manifold") # For trimesh 4.x
+                                try:
+                                    # wall = trimesh.boolean.difference([wall, hole_box], engine="scad") # For trimesh 3.x
+                                    wall = trimesh.boolean.difference([wall, hole_box], engine="manifold") # For trimesh 4.x
+                                except Exception as e:
+                                    warnings.warn(f"Failed to create hole in wall: {e}") # Usually due to invalid hole dimensions
+                                    continue
                                 
-                                # --------------------------------------------------------------f
+                                # --------------------------------------------------------------
                                 # Additionally make the hole as a separate object
                                 hole_type = hole.type.lower()
                                 hole_name = f"{hole_type}_{hole_idx}_{element.id}"
