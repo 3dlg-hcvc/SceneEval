@@ -43,7 +43,7 @@ Metrics that DO NOT require a VLM are:
 Metrics that REQUIRE a VLM are:
 - *Object Count*, *Object Attribute*, *Object-Object Relationship*, *Object-Architecture Relationship*, *Object Support*, *Object Accessibility*
 
-To run the metrics that require a VLM, the default implementation uses OpenAI's GPT-4o, so you will need an OpenAI API key. (The demo )
+To run the metrics that require a VLM, the default implementation uses OpenAI's GPT-4o, so you will need an OpenAI API key. (The demo below does not require this.)
 
 Create a `.env` file in the root directory following the template in `.env.example`, and add your OpenAI API key:
 ```
