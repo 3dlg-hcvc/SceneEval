@@ -11,6 +11,7 @@
 
 
 ## News
+- 2025-11-04: Released scripts for converting Holodeck output into SceneEval-compatible format!
 - 2025-10-27: Release v1.1 with a new metric *Opening Clearance*, support for [LayoutVLM](https://github.com/sunfanyunn/LayoutVLM) and [HSM](https://github.com/3dlg-hcvc/hsm), bug fixes, and more! The environment setup is now simplified and the demo is easier to run! Give it a try!
 - 2025-06-27: Codebase release v1.0!
 - 2025-06-10: Released SceneEval-500 dataset and v0.9 of the SceneEval codebase!
