@@ -226,12 +226,11 @@ Found a bug or want to contribute a new method or metric? We'd love your help! P
 ## Citation
 If you find SceneEval helpful in your research, please cite our work:
 ```
-@article{tam2025sceneeval,
+@inproceedings{tam2026sceneeval,
     title = {{SceneEval}: Evaluating Semantic Coherence in Text-Conditioned {3D} Indoor Scene Synthesis},
     author = {Tam, Hou In Ivan and Pun, Hou In Derek and Wang, Austin T. and Chang, Angel X. and Savva, Manolis},
-    year = {2025},
-    eprint = {2503.14756},
-    archivePrefix = {arXiv}
+    year = {2026},
+    booktitle = {Proceedings of the IEEE Winter Conference on Applications of Computer Vision (WACV)}
 }
 ```
 
