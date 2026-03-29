@@ -25,6 +25,7 @@ WACV 2026 (Oral)
 - [x] Provide script for downloading and processing Holodeck's assets
 - [x] Create guide for extending SceneEval with new methods and metrics
 - [ ] Replace custom VLM interface with Pydantic AI
+- [ ] Port back improvements from the SceneSmith fork
 
 
 
