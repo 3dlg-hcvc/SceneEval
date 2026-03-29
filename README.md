@@ -10,7 +10,7 @@ WACV 2026 (Oral)
 
 [Page](https://3dlg-hcvc.github.io/SceneEval/) | [Paper](https://arxiv.org/abs/2503.14756) | [Data](https://github.com/3dlg-hcvc/SceneEval/releases)
 
-
+## If something isn’t working or you have an idea for improvement, let me know — I’d be happy to help 🙂
 
 ## News
 - 2025-11-04: Released scripts for converting Holodeck output into SceneEval-compatible format!
