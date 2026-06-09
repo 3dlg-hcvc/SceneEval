@@ -26,6 +26,8 @@ WACV 2026 (Oral)
 - [x] Create guide for extending SceneEval with new methods and metrics
 - [ ] Replace custom VLM interface with Pydantic AI
 - [ ] Port back improvements from the SceneSmith fork
+- [ ] PIP installable
+Outstanding items above will be resolved by the end of August
 
 
 
